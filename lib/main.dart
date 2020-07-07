@@ -1,5 +1,7 @@
+import 'package:expense_tracker/config/constants.dart';
 import 'package:expense_tracker/domain/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() => runApp(MyApp());
 
@@ -46,7 +48,7 @@ class MyHomePage extends StatelessWidget {
                   children: <Widget>[
                     Container(
                       child: Text(
-                        tx.amount.toString(),
+                        "${tx.amount.toString()} $kMainCurrency",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -72,7 +74,7 @@ class MyHomePage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          tx.createdAt.toString(),
+                          DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY).format(tx.createdAt),
                           style: TextStyle(color: Colors.grey),
                         )
                       ],
