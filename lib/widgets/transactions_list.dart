@@ -1,15 +1,9 @@
 import 'package:expense_tracker/config/constants.dart';
 import 'package:expense_tracker/domain/transaction.dart';
-import 'package:expense_tracker/services/transaction_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class TransactionsWidget extends StatefulWidget {
-  @override
-  _TransactionsWidgetState createState() => _TransactionsWidgetState(TransactionService().getTransactions());
-}
-
-class _TransactionsWidgetState extends State<TransactionsWidget> {
+class TransactionsList extends StatelessWidget {
   final List<Transaction> _transactions;
 
   @override
@@ -59,5 +53,6 @@ class _TransactionsWidgetState extends State<TransactionsWidget> {
     }).toList());
   }
 
-  _TransactionsWidgetState(this._transactions);
+  TransactionsList({List<Transaction> transactions})
+      : this._transactions = transactions;
 }
