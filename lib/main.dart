@@ -24,6 +24,9 @@ class MyHomePage extends StatelessWidget {
     Transaction(
         id: 'id-3', title: 'Chicken', amount: 53.1, createdAt: DateTime.now()),
   ];
+  
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +35,45 @@ class MyHomePage extends StatelessWidget {
         title: Text('Flutter App'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
             width: double.infinity,
             child: Card(
               child: Text('Chart'),
               elevation: 5,
+            ),
+          ),
+          Card(
+            elevation: 5,
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Title'),
+                    controller: titleController,
+                  ),
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Amount'),
+                    controller: amountController,
+                  ),
+                  FlatButton(
+                    child: Text('Add transaction'),
+                    onPressed: () {
+                      var transaction = Transaction(
+                        createdAt: DateTime.now(),
+                        amount: double.parse(amountController.text),
+                        title: titleController.text,
+                        id: "${titleController.text} and ${amountController.text}"
+                      );
+                      transactions.add(transaction);
+                    },
+                    textColor: Colors.purple,
+                  )
+                ],
+              ),
             ),
           ),
           Column(
@@ -74,7 +109,8 @@ class MyHomePage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY).format(tx.createdAt),
+                          DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY)
+                              .format(tx.createdAt),
                           style: TextStyle(color: Colors.grey),
                         )
                       ],
