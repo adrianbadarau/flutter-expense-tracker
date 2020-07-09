@@ -1,9 +1,14 @@
 import 'package:expense_tracker/domain/transaction.dart';
+import 'package:expense_tracker/services/transaction_service.dart';
 import 'package:flutter/material.dart';
 
 class NewTransaction extends StatelessWidget {
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
+  final Function _addNewTransaction;
+
+  NewTransaction({Function addNewTransaction})
+      : this._addNewTransaction = addNewTransaction;
 
   @override
   Widget build(BuildContext context) {
@@ -16,20 +21,21 @@ class NewTransaction extends StatelessWidget {
           children: <Widget>[
             TextField(
               decoration: InputDecoration(labelText: 'Title'),
-              controller: titleController,
+              controller: _titleController,
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
-              controller: amountController,
+              controller: _amountController,
             ),
             FlatButton(
               child: Text('Add transaction'),
               onPressed: () {
                 var transaction = Transaction(
                     createdAt: DateTime.now(),
-                    amount: double.parse(amountController.text),
-                    title: titleController.text,
-                    id: "${titleController.text} and ${amountController.text}");
+                    amount: double.parse(_amountController.text),
+                    title: _titleController.text,
+                    id: "${_titleController.text} and ${_amountController.text} and ${DateTime.now().toString()}");
+                _addNewTransaction(transaction);
               },
               textColor: Colors.purple,
             )

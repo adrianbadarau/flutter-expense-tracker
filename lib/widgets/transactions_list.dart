@@ -1,15 +1,16 @@
 import 'package:expense_tracker/config/constants.dart';
 import 'package:expense_tracker/domain/transaction.dart';
+import 'package:expense_tracker/services/transaction_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class TransactionsList extends StatelessWidget {
-  final List<Transaction> _transactions;
+  final TransactionService _transactionService;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-        children: _transactions.map((Transaction tx) {
+        children: _transactionService.getTransactions().map((Transaction tx) {
       return Card(
         child: Row(
           children: <Widget>[
@@ -53,6 +54,6 @@ class TransactionsList extends StatelessWidget {
     }).toList());
   }
 
-  TransactionsList({List<Transaction> transactions})
-      : this._transactions = transactions;
+  TransactionsList({TransactionService transactionService})
+      : this._transactionService = transactionService;
 }
