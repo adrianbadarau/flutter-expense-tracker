@@ -19,7 +19,7 @@ class TransactionsList extends StatelessWidget {
               children: <Widget>[
                 Container(
                   child: Text(
-                    "${tx.amount.toString()} $kMainCurrency",
+                    "${tx.amount.toStringAsFixed(2)} $kMainCurrency",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
