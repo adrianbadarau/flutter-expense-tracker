@@ -24,6 +24,7 @@ class _NewTransactionState extends State<NewTransaction> {
       id: "${_titleController.text} and ${_amountController.text} and ${DateTime.now().toString()}",
     );
     widget.addNewTransaction(transaction);
+    Navigator.of(context).pop();
   }
 
   @override
