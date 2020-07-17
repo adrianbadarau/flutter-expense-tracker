@@ -1,22 +1,29 @@
 import 'package:expense_tracker/domain/transaction.dart';
-import 'package:expense_tracker/services/transaction_service.dart';
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
-  final _titleController = TextEditingController();
-  final _amountController = TextEditingController();
+class NewTransaction extends StatefulWidget {
   final Function addNewTransaction;
 
-  NewTransaction({Function addNewTransaction})
+  NewTransaction({@required Function addNewTransaction})
       : this.addNewTransaction = addNewTransaction;
+
+  @override
+  _NewTransactionState createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final _titleController = TextEditingController();
+
+  final _amountController = TextEditingController();
 
   void submitData() {
     var transaction = Transaction(
-        createdAt: DateTime.now(),
-        amount: double.parse(_amountController.text),
-        title: _titleController.text,
-        id: "${_titleController.text} and ${_amountController.text} and ${DateTime.now().toString()}");
-    addNewTransaction(transaction);
+      createdAt: DateTime.now(),
+      amount: double.parse(_amountController.text),
+      title: _titleController.text,
+      id: "${_titleController.text} and ${_amountController.text} and ${DateTime.now().toString()}",
+    );
+    widget.addNewTransaction(transaction);
   }
 
   @override
