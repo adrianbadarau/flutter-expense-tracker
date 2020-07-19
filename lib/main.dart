@@ -1,3 +1,4 @@
+import 'package:expense_tracker/widgets/chart.dart';
 import 'package:expense_tracker/widgets/transactions_list.dart';
 
 import 'services/transaction_service.dart';
@@ -63,13 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: ListView(
         children: <Widget>[
-          Container(
-            width: double.infinity,
-            child: Card(
-              child: Text('Chart'),
-              elevation: 5,
-            ),
-          ),
+          Chart(recentTransactions: this.transactionService.recentTransactions),
           TransactionsList(transactionService: this.transactionService)
         ],
       ),
