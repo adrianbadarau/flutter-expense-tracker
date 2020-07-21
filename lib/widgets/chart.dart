@@ -31,7 +31,7 @@ class Chart extends StatelessWidget {
           day: DateFormat.E().format(weekDay),
           amount: sum,
           procOfTotal: procOfTotal);
-    });
+    }).reversed.toList();
   }
 
   List<Widget> buildChartItems() {
