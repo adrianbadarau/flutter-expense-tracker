@@ -1,5 +1,6 @@
 import 'package:expense_tracker/domain/transaction.dart';
 import 'package:expense_tracker/widgets/chart_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -22,21 +23,26 @@ class Chart extends StatelessWidget {
     return List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(Duration(days: index));
       double sum = recentTransactions
-          .where((element) => element.createdAt.difference(weekDay).inDays == 0)
+          .where((element) =>
+              element.createdAt.difference(weekDay).inHours + 1 < 24)
           .fold(0, (previousValue, element) => previousValue + element.amount);
+      double procOfTotal = (sum > 0 || total > 0) ? sum / total : 0;
       return ChartColumn(
           day: DateFormat.E().format(weekDay),
           amount: sum,
-          procOfTotal: sum / total);
+          procOfTotal: procOfTotal);
     });
   }
 
   List<Widget> buildChartItems() {
     return this.groupedTransactionValues.map((column) {
-      return ChartBar(
-        label: column.day,
-        spendingAmount: column.amount,
-        spendingProcOfTotal: column.procOfTotal,
+      return Flexible(
+        fit: FlexFit.tight,
+        child: ChartBar(
+          label: column.day,
+          spendingAmount: column.amount,
+          spendingProcOfTotal: column.procOfTotal,
+        ),
       );
     }).toList();
   }
@@ -47,8 +53,12 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
-      child: Row(
-        children: buildChartItems(),
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: buildChartItems(),
+        ),
       ),
     );
   }
