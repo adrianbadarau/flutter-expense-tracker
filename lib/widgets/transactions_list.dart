@@ -28,39 +28,31 @@ class TransactionsList extends StatelessWidget {
               itemBuilder: (context, index) {
                 var tx = _transactionService.getTransactions()[index];
                 return Card(
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        child: Text(
-                          "${tx.amount.toStringAsFixed(2)} $kMainCurrency",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Theme.of(context).primaryColor),
+                  elevation: 5,
+                  margin: EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 5
+                  ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Theme.of(context).primaryColor,
+                      child: FittedBox(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "${tx.amount.toStringAsFixed(2)} $kMainCurrency",
+                          ),
                         ),
-                        margin: EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 15,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 2, color: Theme.of(context).primaryColor),
-                        ),
-                        padding: EdgeInsets.all(10),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(tx.title,
-                              style: Theme.of(context).textTheme.headline6),
-                          Text(
-                            DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY)
-                                .format(tx.createdAt),
-                            style: TextStyle(color: Colors.grey),
-                          )
-                        ],
-                      )
-                    ],
+                    ),
+                    title: Text(tx.title,
+                        style: Theme.of(context).textTheme.headline6),
+                    subtitle:                           Text(
+                      DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY)
+                          .format(tx.createdAt),
+                      style: TextStyle(color: Colors.grey),
+                    ),
                   ),
                 );
               },
