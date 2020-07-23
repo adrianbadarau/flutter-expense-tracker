@@ -1,5 +1,6 @@
 import 'package:expense_tracker/domain/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addNewTransaction;
@@ -13,10 +14,10 @@ class NewTransaction extends StatefulWidget {
 
 class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
-
   final _amountController = TextEditingController();
+  DateTime _selectedDate;
 
-  void submitData() {
+  void _submitData() {
     var transaction = Transaction(
       createdAt: DateTime.now(),
       amount: double.parse(_amountController.text),
@@ -25,6 +26,23 @@ class _NewTransactionState extends State<NewTransaction> {
     );
     widget.addNewTransaction(transaction);
     Navigator.of(context).pop();
+  }
+
+  void _toggleDatePicker() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2019),
+            lastDate: DateTime.now())
+        .then((DateTime value) {
+      if (value == null) {
+        return;
+      }
+      setState(() {
+        _selectedDate = value;
+      });
+
+    });
   }
 
   @override
@@ -44,27 +62,31 @@ class _NewTransactionState extends State<NewTransaction> {
               decoration: InputDecoration(labelText: 'Amount'),
               controller: _amountController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (_) => submitData(),
+              onSubmitted: (_) => _submitData(),
             ),
             Container(
               height: 70,
               child: Row(
                 children: <Widget>[
-                  Text('No date chosen'),
+                  Expanded(
+                    child: Text((_selectedDate == null)
+                        ? 'No date chosen'
+                        : DateFormat.yMMMd().format(_selectedDate)),
+                  ),
                   FlatButton(
                     textColor: Theme.of(context).primaryColor,
                     child: Text(
                       'Choose date',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    onPressed: () {},
+                    onPressed: this._toggleDatePicker,
                   )
                 ],
               ),
             ),
             FlatButton(
               child: Text('Add transaction'),
-              onPressed: submitData,
+              onPressed: _submitData,
               textColor: Theme.of(context).primaryColor,
             )
           ],
