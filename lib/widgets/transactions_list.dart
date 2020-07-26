@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 class TransactionsList extends StatelessWidget {
   final TransactionService _transactionService;
+  final Function _deleteTransaction;
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +30,7 @@ class TransactionsList extends StatelessWidget {
                 var tx = _transactionService.getTransactions()[index];
                 return Card(
                   elevation: 5,
-                  margin: EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 5
-                  ),
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
                   child: ListTile(
                     leading: CircleAvatar(
                       radius: 30,
@@ -48,10 +46,17 @@ class TransactionsList extends StatelessWidget {
                     ),
                     title: Text(tx.title,
                         style: Theme.of(context).textTheme.headline6),
-                    subtitle:                           Text(
+                    subtitle: Text(
                       DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY)
                           .format(tx.createdAt),
                       style: TextStyle(color: Colors.grey),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(
+                        Icons.delete,
+                        color: Theme.of(context).errorColor,
+                      ),
+                      onPressed: () => _deleteTransaction(tx),
                     ),
                   ),
                 );
@@ -61,6 +66,8 @@ class TransactionsList extends StatelessWidget {
     );
   }
 
-  TransactionsList({TransactionService transactionService})
-      : this._transactionService = transactionService;
+  TransactionsList(
+      {TransactionService transactionService, Function deleteTransaction})
+      : this._transactionService = transactionService,
+        this._deleteTransaction = deleteTransaction;
 }

@@ -15,20 +15,20 @@ class MyApp extends StatelessWidget {
       title: 'Personal Expenses',
       home: MyHomePage(),
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-        accentColor: Colors.blue,
-        fontFamily: 'Quicksand',
-        textTheme: ThemeData.light().textTheme.copyWith(
-            headline6: TextStyle(fontFamily: 'OpenSans', fontSize: 18)),
-        appBarTheme: AppBarTheme(
-            textTheme: ThemeData.light().textTheme.copyWith(
-                  headline6: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                  button: TextStyle(color: Colors.white),
-                )),
-      ),
+          primarySwatch: Colors.blueGrey,
+          accentColor: Colors.blue,
+          fontFamily: 'Quicksand',
+          textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: TextStyle(fontFamily: 'OpenSans', fontSize: 18)),
+          appBarTheme: AppBarTheme(
+              textTheme: ThemeData.light().textTheme.copyWith(
+                    headline6: TextStyle(
+                        fontFamily: 'OpenSans',
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                    button: TextStyle(color: Colors.white),
+                  )),
+          errorColor: Colors.red),
     );
   }
 }
@@ -58,6 +58,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _deleteTransaction(Transaction transaction) {
+    setState(() {
+      transactionService.deleteTransaction(transaction);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +79,10 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ListView(
         children: <Widget>[
           Chart(recentTransactions: this.transactionService.recentTransactions),
-          TransactionsList(transactionService: this.transactionService)
+          TransactionsList(
+            transactionService: this.transactionService,
+            deleteTransaction: this._deleteTransaction,
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(

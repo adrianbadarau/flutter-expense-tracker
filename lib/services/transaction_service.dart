@@ -15,4 +15,8 @@ class TransactionService {
   void addTransaction(Transaction transaction) {
     _transactions.add(transaction);
   }
+
+  void deleteTransaction(Transaction transaction){
+    _transactions.remove(transaction);
+  }
 }
