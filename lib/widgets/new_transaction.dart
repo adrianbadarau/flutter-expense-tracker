@@ -19,7 +19,7 @@ class _NewTransactionState extends State<NewTransaction> {
 
   void _submitData() {
     var transaction = Transaction(
-      createdAt: DateTime.now(),
+      createdAt: _selectedDate ?? DateTime.now(),
       amount: double.parse(_amountController.text),
       title: _titleController.text,
       id: "${_titleController.text} and ${_amountController.text} and ${DateTime.now().toString()}",
@@ -41,7 +41,6 @@ class _NewTransactionState extends State<NewTransaction> {
       setState(() {
         _selectedDate = value;
       });
-
     });
   }
 

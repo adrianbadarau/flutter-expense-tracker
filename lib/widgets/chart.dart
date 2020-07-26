@@ -24,7 +24,9 @@ class Chart extends StatelessWidget {
       final weekDay = DateTime.now().subtract(Duration(days: index));
       double sum = recentTransactions
           .where((element) =>
-              element.createdAt.difference(weekDay).inHours + 1 < 24)
+              (element.createdAt.day == weekDay.day) &&
+              (element.createdAt.month == weekDay.month) &&
+              element.createdAt.year == weekDay.year)
           .fold(0, (previousValue, element) => previousValue + element.amount);
       double procOfTotal = (sum > 0 || total > 0) ? sum / total : 0;
       return ChartColumn(
