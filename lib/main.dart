@@ -76,12 +76,14 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      body: ListView(
+      body: Column(
         children: <Widget>[
           Chart(recentTransactions: this.transactionService.recentTransactions),
-          TransactionsList(
-            transactionService: this.transactionService,
-            deleteTransaction: this._deleteTransaction,
+          Expanded(
+            child: TransactionsList(
+              transactionService: this.transactionService,
+              deleteTransaction: this._deleteTransaction,
+            ),
           )
         ],
       ),
