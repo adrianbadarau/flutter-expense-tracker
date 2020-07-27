@@ -1,12 +1,18 @@
 import 'package:expense_tracker/widgets/chart.dart';
 import 'package:expense_tracker/widgets/transactions_list.dart';
+import 'package:flutter/services.dart';
 
 import 'services/transaction_service.dart';
 import 'widgets/new_transaction.dart';
 import 'package:flutter/material.dart';
 import 'domain/transaction.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -18,16 +24,22 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blueGrey,
           accentColor: Colors.blue,
           fontFamily: 'Quicksand',
-          textTheme: ThemeData.light().textTheme.copyWith(
+          textTheme: ThemeData
+              .light()
+              .textTheme
+              .copyWith(
               headline6: TextStyle(fontFamily: 'OpenSans', fontSize: 18)),
           appBarTheme: AppBarTheme(
-              textTheme: ThemeData.light().textTheme.copyWith(
-                    headline6: TextStyle(
-                        fontFamily: 'OpenSans',
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                    button: TextStyle(color: Colors.white),
-                  )),
+              textTheme: ThemeData
+                  .light()
+                  .textTheme
+                  .copyWith(
+                headline6: TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+                button: TextStyle(color: Colors.white),
+              )),
           errorColor: Colors.red),
     );
   }
